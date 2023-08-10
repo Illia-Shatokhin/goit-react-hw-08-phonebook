@@ -1,10 +1,9 @@
-export const selectLoading = state => state.authorization.isLoading;
+export const selectUserLoading = state => state.auth.isLoading;
 
-export const selectError = state => state.authorization.error;
+export const selectUserError = state => state.auth.error;
 
-export const selectToken = state => state.authorization.token;
+export const selectToken = state => state.auth.token;
 
-export const selectUserData = state => state.authorization.userData;
+export const selectUserData = state => state.auth.userData;
 
-export const selectAuthentificated = state =>
-  state.authorization.authentificated;
+export const selectAuthentificated = state => state.auth.authentificated;

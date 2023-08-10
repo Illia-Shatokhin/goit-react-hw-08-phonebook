@@ -1,6 +1,9 @@
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { SharedLayout } from './SharedLayout/SharedLayout';
-import { lazy } from 'react';
+import { lazy, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshUserThunk } from 'redux/operations';
+import { selectToken } from 'redux/selectors';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Register = lazy(() => import('pages/Register/Register'));
@@ -9,15 +12,16 @@ const Contacts = lazy(() => import('pages/Contacts/Contacts'));
 const NotFound = lazy(() => import('pages/NotFound/NotFound'));
 
 export const App = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  useEffect(() => {
+    if (!token) return;
+
+    dispatch(refreshUserThunk());
+  }, [token, dispatch]);
+
   return (
     <>
-      <nav>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/register">Register</NavLink>
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="/contacts">Contacts</NavLink>
-        <NavLink to="*">NotFound</NavLink>
-      </nav>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />

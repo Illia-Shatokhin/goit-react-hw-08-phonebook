@@ -15,6 +15,9 @@ import {
 } from '@mui/material';
 import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
 import MenuIcon from '@mui/icons-material/Menu';
+import { logoutUserThunk } from 'redux/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthentificated } from 'redux/selectors';
 
 const pages = [
   { name: 'Home', to: '/' },
@@ -27,6 +30,8 @@ const pages = [
 export const SharedLayout = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const dispatch = useDispatch();
+  const authentificated = useSelector(selectAuthentificated);
 
   const handleOpenNavMenu = event => {
     setAnchorElNav(event.currentTarget);
@@ -41,6 +46,9 @@ export const SharedLayout = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const handleLogOut = () => {
+    dispatch(logoutUserThunk());
   };
 
   return (
@@ -106,7 +114,7 @@ export const SharedLayout = () => {
                       component={Link}
                       to={`${page.to}`}
                     >
-                      {page.name}
+                      {page.name}1
                     </Typography>
                   </MenuItem>
                 ))}
@@ -133,18 +141,47 @@ export const SharedLayout = () => {
             >
               Phonebook
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map(page => (
+            <Box
+              sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
+              component="nav"
+            >
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to="/"
+              >
+                Home
+              </Button>
+              {authentificated ? (
                 <Button
-                  key={page.name}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                   component={Link}
-                  to={`${page.to}`}
+                  to="/contacts"
                 >
-                  {page.name}
+                  Contacts
                 </Button>
-              ))}
+              ) : (
+                <>
+                  <Button
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    component={Link}
+                    to="/register"
+                  >
+                    Register
+                  </Button>
+                  <Button
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    component={Link}
+                    to="/login"
+                  >
+                    Login
+                  </Button>
+                </>
+              )}
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -173,7 +210,9 @@ export const SharedLayout = () => {
                   <Typography textAlign="center">email</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Logout</Typography>
+                  <Typography onClick={handleLogOut} textAlign="center">
+                    Logout
+                  </Typography>
                 </MenuItem>
               </Menu>
             </Box>

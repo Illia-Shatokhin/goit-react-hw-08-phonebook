@@ -14,7 +14,7 @@ export const clearToken = () => {
 };
 
 export const registerUserThunk = createAsyncThunk(
-  'authorization/register',
+  'auth/register',
   async (userData, thunkApi) => {
     try {
       const { data } = await $instance.post('/users/signup', userData);
@@ -28,7 +28,7 @@ export const registerUserThunk = createAsyncThunk(
 );
 
 export const loginUserThunk = createAsyncThunk(
-  'authorization/login',
+  'auth/login',
   async (userData, thunkApi) => {
     try {
       const { data } = await $instance.post('/users/login', userData);
@@ -42,7 +42,7 @@ export const loginUserThunk = createAsyncThunk(
 );
 
 export const refreshUserThunk = createAsyncThunk(
-  'authorization/refreshUser',
+  'auth/refreshUser',
   async (_, thunkApi) => {
     const state = thunkApi.getState();
     const token = state.auth.token;
@@ -59,7 +59,7 @@ export const refreshUserThunk = createAsyncThunk(
 );
 
 export const logoutUserThunk = createAsyncThunk(
-  'authorization/logout',
+  'auth/logout',
   async (_, thunkApi) => {
     try {
       const { data } = await $instance.post('/users/logout');

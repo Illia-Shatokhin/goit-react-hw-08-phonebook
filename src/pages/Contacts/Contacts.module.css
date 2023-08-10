@@ -1,0 +1,12 @@
+.formOutline {
+  display: inline-block;
+  margin: 8px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+}
+.contactsContainer {
+  composes: formOutline;
+  display: flex;
+  justify-content: space-between;
+  max-width: 463.5px;
+}
