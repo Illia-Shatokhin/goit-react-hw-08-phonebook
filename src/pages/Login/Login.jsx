@@ -36,7 +36,7 @@ export default function Login() {
   return (
     <ThemeProvider theme={defaultTheme}>
       {isLoading && <Loader />}
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ flexGrow: 1 }}>
         <CssBaseline />
         <Box
           sx={{

@@ -6,7 +6,7 @@ import css from './Contacts.module.css';
 
 const Contacts = () => {
   return (
-    <>
+    <main className={css.contactsMain}>
       <div className={css.formOutline}>
         <Box
           component="form"
@@ -60,7 +60,7 @@ const Contacts = () => {
           variant="outlined"
         />
       </div>
-    </>
+    </main>
   );
 };
 export default Contacts;

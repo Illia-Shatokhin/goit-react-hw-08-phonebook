@@ -4,7 +4,11 @@ const Home = () => {
   return (
     <>
       <CssBaseline />
-      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
+      <Container
+        component="main"
+        sx={{ mt: 8, mb: 2, flexGrow: 1 }}
+        maxWidth="sm"
+      >
         <Typography variant="h2" component="h1" gutterBottom>
           Sticky footer
         </Typography>
