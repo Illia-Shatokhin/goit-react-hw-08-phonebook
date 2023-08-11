@@ -14,6 +14,7 @@ const NotFound = lazy(() => import('pages/NotFound/NotFound'));
 export const App = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
+
   useEffect(() => {
     if (!token) return;
 

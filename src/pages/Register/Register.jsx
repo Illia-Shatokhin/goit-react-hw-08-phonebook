@@ -11,13 +11,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link1 from '@mui/material/Link';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUserThunk } from 'redux/operations';
+import { Loader } from 'components/Loader/Loader';
+import { selectUserLoading } from 'redux/selectors';
 
 const defaultTheme = createTheme();
 
 export default function Register() {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectUserLoading);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -34,6 +37,7 @@ export default function Register() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      {isLoading && <Loader />}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

@@ -11,13 +11,17 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link1 from '@mui/material/Link';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUserThunk } from 'redux/operations';
+import { selectUserLoading } from 'redux/selectors';
+import { Loader } from 'components/Loader/Loader';
 
 const defaultTheme = createTheme();
 
 export default function Login() {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectUserLoading);
+
   const handleSubmit = event => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -31,6 +35,7 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      {isLoading && <Loader />}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

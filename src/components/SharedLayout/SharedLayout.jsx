@@ -9,15 +9,22 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  ThemeProvider,
   Toolbar,
   Tooltip,
   Typography,
+  createTheme,
 } from '@mui/material';
 import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
 import MenuIcon from '@mui/icons-material/Menu';
 import { logoutUserThunk } from 'redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAuthentificated } from 'redux/selectors';
+import {
+  selectAuthentificated,
+  selectUserData,
+  selectUserLoading,
+} from 'redux/selectors';
+import { Loader } from 'components/Loader/Loader';
 
 const pages = [
   { name: 'Home', to: '/' },
@@ -27,11 +34,28 @@ const pages = [
   { name: 'NotFound', to: '*' },
 ];
 
+const defaultTheme = createTheme();
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="text.secondary">
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
 export const SharedLayout = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const dispatch = useDispatch();
   const authentificated = useSelector(selectAuthentificated);
+  const userData = useSelector(selectUserData);
+  const isLoading = useSelector(selectUserLoading);
 
   const handleOpenNavMenu = event => {
     setAnchorElNav(event.currentTarget);
@@ -184,67 +208,77 @@ export const SharedLayout = () => {
               )}
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar variant="rounded">N</Avatar>
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">email</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography onClick={handleLogOut} textAlign="center">
-                    Logout
-                  </Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
+            {authentificated && (
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar variant="rounded">{userData.name[0]}</Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem disabled onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{userData.email}</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography onClick={handleLogOut} textAlign="center">
+                      Logout
+                    </Typography>
+                  </MenuItem>
+                </Menu>
+              </Box>
+            )}
           </Toolbar>
         </Container>
       </AppBar>
-      <Suspense fallback={<div>Loading...</div>}>
+
+      {isLoading && <Loader />}
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
+      <ThemeProvider theme={defaultTheme}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+          }}
+        >
+          <Box
+            component="footer"
+            sx={{
+              py: 3,
+              px: 2,
+              mt: 'auto',
+              backgroundColor: theme =>
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[200]
+                  : theme.palette.grey[800],
+            }}
+          >
+            <Container maxWidth="sm">
+              <Typography variant="body1">
+                My sticky footer can be found here.
+              </Typography>
+              <Copyright />
+            </Container>
+          </Box>
+        </Box>
+      </ThemeProvider>
     </>
   );
 };
-// function ResponsiveAppBar() {
-//   const [anchorElNav, setAnchorElNav] = React.useState(null);
-//   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-//   const handleOpenNavMenu = (event) => {
-//     setAnchorElNav(event.currentTarget);
-//   };
-//   const handleOpenUserMenu = (event) => {
-//     setAnchorElUser(event.currentTarget);
-//   };
-
-//   const handleCloseNavMenu = () => {
-//     setAnchorElNav(null);
-//   };
-
-//   const handleCloseUserMenu = () => {
-//     setAnchorElUser(null);
-//   };
-
-//   return (
-//   );
-// }
-// export default ResponsiveAppBar;
