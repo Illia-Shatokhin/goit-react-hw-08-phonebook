@@ -3,7 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -12,14 +12,18 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link1 from '@mui/material/Link';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUserThunk } from 'redux/operations';
-import { selectUserLoading } from 'redux/selectors';
+import { loginUserThunk } from 'redux/auth/authOperations';
+import {
+  selectAuthentificated,
+  selectUserLoading,
+} from 'redux/auth/authSelectors';
 import { Loader } from 'components/Loader/Loader';
 
 const defaultTheme = createTheme();
 
 export default function Login() {
   const dispatch = useDispatch();
+  const authentificated = useSelector(selectAuthentificated);
   const isLoading = useSelector(selectUserLoading);
 
   const handleSubmit = event => {
@@ -32,6 +36,8 @@ export default function Login() {
       })
     );
   };
+
+  if (authentificated) return <Navigate to="/" />;
 
   return (
     <ThemeProvider theme={defaultTheme}>

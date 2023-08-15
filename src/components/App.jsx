@@ -2,8 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshUserThunk } from 'redux/operations';
-import { selectToken } from 'redux/selectors';
+import { refreshUserThunk } from 'redux/auth/authOperations';
+import { selectAuthentificated, selectToken } from 'redux/auth/authSelectors';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Register = lazy(() => import('pages/Register/Register'));
@@ -14,12 +14,13 @@ const NotFound = lazy(() => import('pages/NotFound/NotFound'));
 export const App = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
+  const authentificated = useSelector(selectAuthentificated);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || authentificated) return;
 
     dispatch(refreshUserThunk());
-  }, [token, dispatch]);
+  }, [authentificated, token, dispatch]);
 
   return (
     <>

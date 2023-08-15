@@ -3,7 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -12,15 +12,19 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link1 from '@mui/material/Link';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUserThunk } from 'redux/operations';
+import { registerUserThunk } from 'redux/auth/authOperations';
 import { Loader } from 'components/Loader/Loader';
-import { selectUserLoading } from 'redux/selectors';
+import {
+  selectAuthentificated,
+  selectUserLoading,
+} from 'redux/auth/authSelectors';
 
 const defaultTheme = createTheme();
 
 export default function Register() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectUserLoading);
+  const authentificated = useSelector(selectAuthentificated);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -31,9 +35,10 @@ export default function Register() {
       name: `${form.elements.firstName.value} ${form.elements.lastName.value}`,
     };
     dispatch(registerUserThunk(userData));
-    // console.log(userData);
     form.reset();
   };
+
+  if (authentificated) return <Navigate to="/" />;
 
   return (
     <ThemeProvider theme={defaultTheme}>

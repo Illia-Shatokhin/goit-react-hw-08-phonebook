@@ -17,13 +17,13 @@ import {
 } from '@mui/material';
 import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
 import MenuIcon from '@mui/icons-material/Menu';
-import { logoutUserThunk } from 'redux/operations';
+import { logoutUserThunk } from 'redux/auth/authOperations';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectAuthentificated,
   selectUserData,
   selectUserLoading,
-} from 'redux/selectors';
+} from 'redux/auth/authSelectors';
 import { Loader } from 'components/Loader/Loader';
 
 const pages = [
@@ -47,6 +47,12 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+function getRandomHexColor() {
+  return `#${Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, 0)}`;
 }
 
 export const SharedLayout = () => {
@@ -211,8 +217,17 @@ export const SharedLayout = () => {
             {authentificated && (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar variant="rounded">{userData.name[0]}</Avatar>
+                  <IconButton
+                    color="red"
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0 }}
+                  >
+                    <Avatar
+                      variant="rounded"
+                      sx={{ bgcolor: getRandomHexColor() }}
+                    >
+                      {userData.name[0].toUpperCase()}
+                    </Avatar>
                   </IconButton>
                 </Tooltip>
                 <Menu
