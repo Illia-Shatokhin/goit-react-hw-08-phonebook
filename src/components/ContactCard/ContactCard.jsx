@@ -14,12 +14,13 @@ function getRandomHexColor() {
 
 export const ContactCard = ({ name, number, id }) => {
   const dispatch = useDispatch();
+
   const handleDeleteContact = id => {
     dispatch(deleteContactThunk(id));
   };
 
   return (
-    <Card sx={{ width: 250 }}>
+    <Card>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: getRandomHexColor() }} aria-label="recipe">
@@ -28,7 +29,7 @@ export const ContactCard = ({ name, number, id }) => {
         }
         action={
           <IconButton
-            onClick={handleDeleteContact(id)}
+            onClick={() => handleDeleteContact(id)}
             sx={{
               transition: 'color 250ms linear',
               '&:hover': { color: 'red' },

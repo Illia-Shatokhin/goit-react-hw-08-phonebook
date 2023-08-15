@@ -79,111 +79,139 @@ const Contacts = () => {
   const showContacts = Array.isArray(contacts) && contacts.length > 0;
 
   return (
-    <section>
-      <div>
-        <Button
-          onClick={handleOpen}
-          color="secondary"
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+    <section style={{ height: '100%' }}>
+      <Container component="div" sx={{ flexGrow: 1 }}>
+        <Box
+          sx={{
+            marginTop: 2,
+            marginBottom: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+          }}
         >
-          Open modal
-          <AddIcon />
-        </Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <ThemeProvider theme={defaultTheme}>
-              {isLoadingUser && <Loader />}
-              <Container component="main" maxWidth="xs" sx={{ flexGrow: 1 }}>
-                <CssBaseline />
+          <Button
+            onClick={handleOpen}
+            color="secondary"
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Add new Contact
+            <AddIcon />
+          </Button>
+        </Box>
+      </Container>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <ThemeProvider theme={defaultTheme}>
+            {isLoadingUser && <Loader />}
+            <Container component="main" maxWidth="xs" sx={{ flexGrow: 1 }}>
+              <CssBaseline />
+              <Box
+                sx={{
+                  marginTop: 8,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                  <AddIcCallIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Add new contact
+                </Typography>
                 <Box
-                  sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
+                  component="form"
+                  noValidate
+                  onSubmit={handleSubmit}
+                  sx={{ mt: 3 }}
                 >
-                  <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <AddIcCallIcon />
-                  </Avatar>
-                  <Typography component="h1" variant="h5">
-                    Add new contact
-                  </Typography>
-                  <Box
-                    component="form"
-                    noValidate
-                    onSubmit={handleSubmit}
-                    sx={{ mt: 3 }}
-                  >
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          color="secondary"
-                          autoComplete="given-name"
-                          name="firstName"
-                          required
-                          fullWidth
-                          id="firstName"
-                          label="First Name"
-                          autoFocus
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          color="secondary"
-                          fullWidth
-                          id="lastName"
-                          label="Last Name"
-                          name="lastName"
-                          autoComplete="family-name"
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          color="secondary"
-                          required
-                          fullWidth
-                          id="number"
-                          label="Number"
-                          name="number"
-                          autoComplete="number"
-                        />
-                      </Grid>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        color="secondary"
+                        autoComplete="given-name"
+                        name="firstName"
+                        required
+                        fullWidth
+                        id="firstName"
+                        label="First Name"
+                        autoFocus
+                      />
                     </Grid>
-                    <Button
-                      color="secondary"
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
-                    >
-                      ADD
-                      <AddIcon />
-                    </Button>
-                  </Box>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        color="secondary"
+                        fullWidth
+                        id="lastName"
+                        label="Last Name"
+                        name="lastName"
+                        autoComplete="family-name"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        color="secondary"
+                        required
+                        fullWidth
+                        id="number"
+                        label="Number"
+                        name="number"
+                        autoComplete="number"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Button
+                    color="secondary"
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    ADD
+                    <AddIcon />
+                  </Button>
                 </Box>
-              </Container>
-            </ThemeProvider>
-          </Box>
-        </Modal>
-      </div>
+              </Box>
+            </Container>
+          </ThemeProvider>
+        </Box>
+      </Modal>
       {isLoadingContacts && <Loader />}
       {error && <p>Error - {error}</p>}
-      {showContacts &&
-        contacts.map(contact => (
-          <ContactCard
-            name={contact.name}
-            number={contact.number}
-            id={contact.id}
-            key={contact.id}
-          />
-        ))}
+      <Container component="div" sx={{ flexGrow: 1 }}>
+        <Typography component="h3" variant="h5">
+          Your Contacts:
+        </Typography>
+        <Box
+          sx={{
+            marginTop: 2,
+            marginBottom: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Grid container spacing={5}>
+            {showContacts &&
+              contacts.map(contact => (
+                <Grid item xs={4} key={contact.id}>
+                  <ContactCard
+                    name={contact.name}
+                    number={contact.number}
+                    id={contact.id}
+                  />
+                </Grid>
+              ))}
+          </Grid>
+        </Box>
+      </Container>
     </section>
   );
 };
