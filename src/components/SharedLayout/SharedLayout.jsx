@@ -25,14 +25,15 @@ import {
   selectUserLoading,
 } from 'redux/auth/authSelectors';
 import { Loader } from 'components/Loader/Loader';
+import Link1 from '@mui/material/Link';
 
-const pages = [
-  { name: 'Home', to: '/' },
-  { name: 'Register', to: '/register' },
-  { name: 'Login', to: '/login' },
-  { name: 'Contacts', to: '/contacts' },
-  { name: 'NotFound', to: '*' },
-];
+// const pages = [
+//   { name: 'Home', to: '/' },
+//   { name: 'Register', to: '/register' },
+//   { name: 'Login', to: '/login' },
+//   { name: 'Contacts', to: '/contacts' },
+//   { name: 'NotFound', to: '*' },
+// ];
 
 const defaultTheme = createTheme();
 
@@ -40,9 +41,14 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary">
       {'Copyright © '}
-      <Link color="inherit" href="https://google.com/">
-        Your Website
-      </Link>{' '}
+      <Link1
+        color="inherit"
+        href="https://drive.google.com/file/d/1GWUKMOOekTHPtXH0rxCzNNrQ5s_o37iK/view?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+      >
+        Illia Shatokhin
+      </Link1>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -137,17 +143,31 @@ export const SharedLayout = () => {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map(page => (
-                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                    <Typography
-                      textAlign="center"
-                      component={Link}
-                      to={`${page.to}`}
-                    >
-                      {page.name}1
-                    </Typography>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Button component={Link} to={`/`}>
+                    Home
+                  </Button>
+                </MenuItem>
+                {authentificated ? (
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Button component={Link} to={`/contacts`}>
+                      Contacts
+                    </Button>
                   </MenuItem>
-                ))}
+                ) : (
+                  <div>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Button component={Link} to={`/register`}>
+                        Register
+                      </Button>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Button component={Link} to={`/login`}>
+                        Login
+                      </Button>
+                    </MenuItem>
+                  </div>
+                )}
               </Menu>
             </Box>
             <ContactEmergencyIcon
@@ -280,7 +300,7 @@ export const SharedLayout = () => {
         >
           <Container maxWidth="sm">
             <Typography variant="body1">
-              My sticky footer can be found here.
+              Information about developer can be found here.
             </Typography>
             <Copyright />
           </Container>

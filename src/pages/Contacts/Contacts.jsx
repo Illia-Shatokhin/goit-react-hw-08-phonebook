@@ -23,6 +23,8 @@ import { useEffect, useState } from 'react';
 import {
   selectContactsError,
   selectContactsIsLoading,
+  selectFilter,
+  selectFilteredContacts,
   selectUserContacts,
 } from 'redux/contacts/contactsSelectors';
 import {
@@ -30,6 +32,7 @@ import {
   requestContactsThunk,
 } from 'redux/contacts/contactsOperations';
 import { ContactCard } from 'components/ContactCard/ContactCard';
+import { filterChange } from 'redux/contacts/contactsSlice';
 
 const defaultTheme = createTheme();
 const style = {
@@ -50,6 +53,8 @@ const Contacts = () => {
   const isLoadingContacts = useSelector(selectContactsIsLoading);
   const error = useSelector(selectContactsError);
   const isLoadingUser = useSelector(selectUserLoading);
+  const filteredContacts = useSelector(selectFilteredContacts);
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -78,7 +83,12 @@ const Contacts = () => {
     handleClose();
   };
 
-  const showContacts = Array.isArray(contacts) && contacts.length > 0;
+  const showContacts =
+    Array.isArray(filteredContacts) && filteredContacts.length > 0;
+
+  const handleOnInput = e => {
+    dispatch(filterChange(e.target.value));
+  };
 
   return (
     <section style={{ height: '100%' }}>
@@ -201,9 +211,7 @@ const Contacts = () => {
             Your Contacts:
           </Typography>
           <TextField
-            onInput={e => {
-              console.log(e.target.value);
-            }}
+            onInput={handleOnInput}
             color="secondary"
             id="find"
             label="Find Contact By Name"
@@ -222,8 +230,8 @@ const Contacts = () => {
           }}
         >
           <Grid container spacing={5}>
-            {showContacts &&
-              contacts.map(contact => (
+            {showContacts ? (
+              filteredContacts.map(contact => (
                 <Grid item xs={4} key={contact.id}>
                   <ContactCard
                     name={contact.name}
@@ -231,7 +239,14 @@ const Contacts = () => {
                     id={contact.id}
                   />
                 </Grid>
-              ))}
+              ))
+            ) : (
+              <Grid item xs={12}>
+                <Typography component="h3" variant="h3">
+                  {`nothing found with the name: ${filter}`}
+                </Typography>
+              </Grid>
+            )}
           </Grid>
         </Box>
       </Container>

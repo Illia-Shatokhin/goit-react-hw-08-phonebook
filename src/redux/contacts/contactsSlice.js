@@ -18,11 +18,17 @@ const initialState = {
   contacts: null,
   isLoading: false,
   error: null,
+  filter: '',
 };
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
+  reducers: {
+    filterChange(state, { payload }) {
+      state.filter = payload;
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(requestContactsThunk.pending, handlePending)
