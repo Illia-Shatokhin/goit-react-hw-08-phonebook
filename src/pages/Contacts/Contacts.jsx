@@ -70,6 +70,8 @@ const Contacts = () => {
       number: form.elements.number.value,
       name: `${form.elements.firstName.value} ${form.elements.lastName.value}`,
     };
+    if (contacts.some(contact => contact.name === userData.name))
+      return alert(`Contact with name ${userData.name} is already exists! `);
     dispatch(addContactThunk(userData));
     form.reset();
 
@@ -80,6 +82,7 @@ const Contacts = () => {
 
   return (
     <section style={{ height: '100%' }}>
+      {isLoadingContacts && <Loader />}
       <Container component="div" sx={{ flexGrow: 1 }}>
         <Box
           sx={{
@@ -183,12 +186,32 @@ const Contacts = () => {
           </ThemeProvider>
         </Box>
       </Modal>
-      {isLoadingContacts && <Loader />}
       {error && <p>Error - {error}</p>}
       <Container component="div" sx={{ flexGrow: 1 }}>
-        <Typography component="h3" variant="h5">
-          Your Contacts:
-        </Typography>
+        <Box
+          sx={{
+            marginTop: 2,
+            marginBottom: 2,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+          }}
+        >
+          <Typography sx={{ display: 'inline' }} component="h3" variant="h5">
+            Your Contacts:
+          </Typography>
+          <TextField
+            onInput={e => {
+              console.log(e.target.value);
+            }}
+            color="secondary"
+            id="find"
+            label="Find Contact By Name"
+            name="find"
+            autoComplete="find"
+            sx={{ width: '400px' }}
+          />
+        </Box>
         <Box
           sx={{
             marginTop: 2,

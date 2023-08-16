@@ -271,6 +271,7 @@ export const SharedLayout = () => {
           sx={{
             py: 3,
             px: 2,
+            textAlign: 'center',
             backgroundColor: theme =>
               theme.palette.mode === 'light'
                 ? theme.palette.grey[200]
