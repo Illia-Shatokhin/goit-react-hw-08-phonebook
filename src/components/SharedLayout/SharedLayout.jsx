@@ -76,6 +76,7 @@ export const SharedLayout = () => {
     setAnchorElUser(null);
   };
   const handleLogOut = () => {
+    handleCloseUserMenu();
     dispatch(logoutUserThunk());
   };
 
@@ -261,7 +262,7 @@ export const SharedLayout = () => {
                   <MenuItem disabled onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">{userData.email}</Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
+                  <MenuItem onClick={handleLogOut}>
                     <Typography onClick={handleLogOut} textAlign="center">
                       Logout
                     </Typography>

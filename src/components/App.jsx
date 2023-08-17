@@ -27,12 +27,12 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
           <Route
-            path="/contacts"
+            path="contacts"
             element={
-              <PrivateRoute redirectTo="/login">
+              <PrivateRoute redirectTo="login">
                 <Contacts />
               </PrivateRoute>
             }
