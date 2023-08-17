@@ -27,14 +27,6 @@ import {
 import { Loader } from 'components/Loader/Loader';
 import Link1 from '@mui/material/Link';
 
-// const pages = [
-//   { name: 'Home', to: '/' },
-//   { name: 'Register', to: '/register' },
-//   { name: 'Login', to: '/login' },
-//   { name: 'Contacts', to: '/contacts' },
-//   { name: 'NotFound', to: '*' },
-// ];
-
 const defaultTheme = createTheme();
 
 function Copyright() {

@@ -26,8 +26,8 @@ const Home = () => {
           {'You can add and remove contacts from your private contact list'}
         </Typography>
         <Typography variant="body1">
-          Technology used: (React, React Hooks, React Router, Redux, Redux
-          Toolkit, Redux Persist, Material UI)
+          Technology used: (React, React Hooks, React Router, PropTypes, Redux,
+          Redux Toolkit, Redux Persist, Material UI)
         </Typography>
       </Container>{' '}
     </>

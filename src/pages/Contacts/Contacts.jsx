@@ -243,7 +243,9 @@ const Contacts = () => {
             ) : (
               <Grid item xs={12}>
                 <Typography component="h3" variant="h3">
-                  {filter ? `nothing found with the name: ${filter}` : ``}
+                  {filter
+                    ? `nothing found with the name: ${filter}`
+                    : `You don't have any contacts`}
                 </Typography>
               </Grid>
             )}

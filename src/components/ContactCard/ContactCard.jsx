@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useDispatch } from 'react-redux';
 import { deleteContactThunk } from 'redux/contacts/contactsOperations';
+import PropTypes from 'prop-types';
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)
@@ -14,7 +15,6 @@ function getRandomHexColor() {
 
 export const ContactCard = ({ name, number, id }) => {
   const dispatch = useDispatch();
-
   const handleDeleteContact = id => {
     dispatch(deleteContactThunk(id));
   };
@@ -44,4 +44,10 @@ export const ContactCard = ({ name, number, id }) => {
       />
     </Card>
   );
+};
+
+ContactCard.propTypes = {
+  name: PropTypes.string,
+  number: PropTypes.string,
+  id: PropTypes.string,
 };
